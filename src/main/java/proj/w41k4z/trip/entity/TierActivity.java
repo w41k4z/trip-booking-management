@@ -1,27 +1,25 @@
 package proj.w41k4z.trip.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import proj.w41k4z.orm.annotation.Column;
+import proj.w41k4z.orm.annotation.Entity;
+import proj.w41k4z.orm.annotation.Generated;
+import proj.w41k4z.orm.annotation.Id;
+import proj.w41k4z.orm.annotation.relationship.ManyToOne;
+import proj.w41k4z.orm.database.Repository;
 
-@Entity
-@Table(name = "tier_activity")
-public class TierActivity {
+@Entity(table = "tier_activity")
+public class TierActivity extends Repository<TierActivity, Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Generated
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "subscription_tier_id", nullable = false)
+    @Column(name = "subscription_tier_id")
     private SubscriptionTier subscriptionTier;
 
     @ManyToOne
-    @JoinColumn(name = "activity_id", nullable = false)
+    @Column(name = "activity_id")
     private Activity activity;
 
     public Long getId() {

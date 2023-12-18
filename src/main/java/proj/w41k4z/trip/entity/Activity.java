@@ -1,21 +1,20 @@
 package proj.w41k4z.trip.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import proj.w41k4z.orm.annotation.Column;
+import proj.w41k4z.orm.annotation.Entity;
+import proj.w41k4z.orm.annotation.Generated;
+import proj.w41k4z.orm.annotation.Id;
+import proj.w41k4z.orm.database.Repository;
 
-@Entity
-@Table(name = "activity")
-public class Activity {
+@Entity(table = "activity")
+public class Activity extends Repository<Activity, Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Generated
+    @Column
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column
     private String name;
 
     @Column

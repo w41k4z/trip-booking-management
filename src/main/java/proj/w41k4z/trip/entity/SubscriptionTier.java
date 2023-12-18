@@ -1,31 +1,27 @@
 package proj.w41k4z.trip.entity;
 
-import java.util.List;
+import proj.w41k4z.orm.annotation.Column;
+import proj.w41k4z.orm.annotation.Entity;
+import proj.w41k4z.orm.annotation.Generated;
+import proj.w41k4z.orm.annotation.Id;
+import proj.w41k4z.orm.annotation.relationship.Join;
+import proj.w41k4z.orm.annotation.relationship.ManyToMany;
+import proj.w41k4z.orm.database.Repository;
 
-import org.hibernate.annotations.ManyToAny;
+@Entity(table = "subscription_tier")
+public class SubscriptionTier extends Repository<SubscriptionTier, Long> {
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "subscription_tier")
-public class SubscriptionTier {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    @Generated
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column
     private String name;
 
-    @ManyToAny
-    @JoinTable(name = "tier_activity", joinColumns = @JoinColumn(name = "subscription_tier_id"), inverseJoinColumns = @JoinColumn(name = "activity_id"))
-    List<Activity> activities;
+    @ManyToMany
+    @Join(table = "tier_activity", joinColumn = "subscription_tier_id", inverseJoinColumn = "activity_id")
+    Activity[] activities;
 
     @Column
     private String description;
@@ -54,11 +50,11 @@ public class SubscriptionTier {
         this.description = description;
     }
 
-    public List<Activity> getActivities() {
+    public Activity[] getActivities() {
         return activities;
     }
 
-    public void setActivities(List<Activity> activities) {
+    public void setActivities(Activity[] activities) {
         this.activities = activities;
     }
 }

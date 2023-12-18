@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <main th:fragment="content">
+      <div class="container-fluid px-4">
+        <header class="d-flex justify-content-between align-items-center">
+          <h1 class="mt-4">Liste des activités</h1>
+          <div class="p-5">
+            <button
+              class="btn btn-dark d-flex align-items-center"
+              data-bs-toggle="modal"
+              data-bs-target="#insertModal"
+            >
+              <span class="m-0 px-2 h3">+</span> Ajout
+            </button>
+            <!-- <Modal> -->
+            <div
+              class="modal fade"
+              id="insertModal"
+              tabindex="-1"
+              aria-labelledby="insertModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header d-flex justify-content-between">
+                    <h4 class="modal-title" id="insertModalLabel">
+                      Nouvelle activité
+                    </h4>
+                    <button
+                      class="btn btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="model-body justify-content-around mt-3 p-3">
+                    <div class="text-black">
+                      <div class="card px-2">
+                        <div class="card-body">
+                          <h4 class="card-title m-0">
+                            Remplir les informations nécessaires
+                          </h4>
+                          <hr />
+                        </div>
+                        <div class="card mb-1">
+                          <form
+                            th:action="@{/activites}"
+                            th:object="${activity}"
+                            class="row g-3 px-3"
+                            method="post"
+                          >
+                            <div class="col-auto col-lg-12">
+                              <label class="form-label" for="name">Nom</label>
+                              <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                th:field="*{name}"
+                                class="form-control"
+                                placeholder="Nom"
+                                required
+                              />
+                            </div>
+                            <div class="col-auto col-lg-12">
+                              <label class="form-label" for="desc"
+                                >Description</label
+                              >
+                              <textarea
+                                class="form-control"
+                                id="desc"
+                                name="description"
+                                th:field="*{description}"
+                                rows="2"
+                              ></textarea>
+                            </div>
+                            <div
+                              class="col-auto col-lg-12 mt-3 d-flex justify-content-end"
+                            >
+                              <button
+                                type="submit"
+                                class="btn btn-primary mb-3"
+                              >
+                                Confirmer
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- </Modal> -->
+          </div>
+        </header>
+        <div class="card mb-4">
+          <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Table
+          </div>
+          <div class="card-body">
+            <table id="datatablesSimple">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nom</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="element, iterStat: ${activities}">
+                  <td th:text="${iterStat.index + 1}"></td>
+                  <td th:text="${element.name}"></td>
+                  <td th:text="${element.description}"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
